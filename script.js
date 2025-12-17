@@ -7,27 +7,18 @@ async function runAI() {
     return;
   }
 
-  outputDiv.innerText = "Thinking...";
+  if (!window.summarizer) {
+    outputDiv.innerText = "Model is still loading... please wait a moment.";
+    return;
+  }
+
+  outputDiv.innerText = "Summarizing...";
 
   try {
-    const response = await fetch(
-      "https://api-inference.huggingface.co/models/facebook/bart-large-cnn",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ inputs: input })
-      }
-    );
-
-    const result = await response.json();
-
-    if (result?.[0]?.summary_text) {
-      outputDiv.innerText = result[0].summary_text;
-    } else {
-      outputDiv.innerText = "No output returned. Try different text.";
-    }
+    const result = await window.summarizer(input);
+    outputDiv.innerText = result[0].summary_text;
   } catch (err) {
-    outputDiv.innerText = "Error contacting AI service.";
+    outputDiv.innerText = "Error running AI model.";
     console.error(err);
   }
 }
