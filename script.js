@@ -1,24 +1,20 @@
-async function runAI() {
-  const input = document.getElementById("inputText").value;
-  const outputDiv = document.getElementById("output");
+// Improved output formatting and handling for summarization
 
-  if (!input.trim()) {
-    outputDiv.innerText = "Please enter some text first.";
-    return;
-  }
+function displaySummary(summary) {
+    // Create a container for the summary
+    const summaryContainer = document.getElementById('summary');
 
-  if (!window.summarizer) {
-    outputDiv.innerText = "Model is still loading... please wait a moment.";
-    return;
-  }
+    // Clear existing content
+    summaryContainer.innerHTML = '';
 
-  outputDiv.innerText = "Summarizing...";
+    // Create a new paragraph for the summary
+    const summaryParagraph = document.createElement('p');
+    summaryParagraph.innerHTML = summary;
+    summaryParagraph.style.whiteSpace = 'pre-wrap'; // This allows better text wrapping
 
-  try {
-    const result = await window.summarizer(input);
-    outputDiv.innerText = result[0].summary_text;
-  } catch (err) {
-    outputDiv.innerText = "Error running AI model.";
-    console.error(err);
-  }
+    // Append the new summary to the container
+    summaryContainer.appendChild(summaryParagraph);
 }
+
+// Usage example:
+// displaySummary('This is an example summary that demonstrates improved formatting and handling.');
