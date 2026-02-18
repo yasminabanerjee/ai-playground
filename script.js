@@ -1,22 +1,14 @@
-async function runAI() {
-    try {
-        // Call your summarization function here, assuming it's defined elsewhere
-        const summary_text = await summarizer();
+function runAI(input) {
+    // Assume some AI processing happens here to generate the summary
+    let summary = generateSummary(input); // Placeholder for actual summary generation logic
 
-        // Display summary in the output div
-        const outputDiv = document.getElementById('output');
+    // Format the summary with HTML for better readability
+    const formattedSummary = `
+        <div style="white-space: pre-wrap; word-wrap: break-word;">
+            ${summary}
+        </div>
+    `;
 
-        // Clear previous content
-        outputDiv.innerHTML = '';
-
-        // Use preformatted text for better readability
-        const pre = document.createElement('pre');
-        pre.textContent = summary_text;
-        outputDiv.appendChild(pre);
-    } catch (error) {
-        // Handle error gracefully
-        console.error('Error occurred while summarizing:', error);
-        const outputDiv = document.getElementById('output');
-        outputDiv.innerHTML = '<p>An error occurred while generating the summary. Please try again later.</p>';
-    }
+    // Display the formatted summary in the appropriate section of the webpage
+    document.getElementById('summaryDisplay').innerHTML = formattedSummary;
 }
