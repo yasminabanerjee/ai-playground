@@ -11,7 +11,7 @@
   window.summarizer = null;
 
   async function loadModel() {
-    window.summarizer = await pipeline("summarization", "Xenova/distilbart-cnn-12-6");
+    window.summarizer = await pipeline("summarization", "Xenova/t5-small");
     console.log("Summarizer loaded");
   }
 
