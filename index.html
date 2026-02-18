@@ -7,12 +7,19 @@
   <script type="module">
   import { pipeline } from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.5.0/dist/transformers.min.js";
 
+  // Configure the default cache location to use Hugging Face CDN
+  window.localStorage.setItem('HF_TOKEN', '');
+
   // Create a global summarizer variable
   window.summarizer = null;
 
   async function loadModel() {
-    window.summarizer = await pipeline("summarization", "Xenova/t5-small");
-    console.log("Summarizer loaded");
+    try {
+      window.summarizer = await pipeline("summarization", "Xenova/t5-small");
+      console.log("Summarizer loaded successfully");
+    } catch (error) {
+      console.error("Failed to load model:", error);
+    }
   }
 
   loadModel();
