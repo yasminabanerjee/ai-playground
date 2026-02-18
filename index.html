@@ -1,51 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>AI Experiment Site</title>
-  <link rel="stylesheet" href="style.css">
-  <script type="module">
-  import { pipeline } from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.5.0/dist/transformers.min.js";
-
-  // Configure the default cache location to use Hugging Face CDN
-  window.localStorage.setItem('HF_TOKEN', '');
-
-  // Create a global summarizer variable
-  window.summarizer = null;
-
-  async function loadModel() {
-    try {
-      window.summarizer = await pipeline("summarization", "Xenova/t5-small");
-      console.log("Summarizer loaded successfully");
-    } catch (error) {
-      console.error("Failed to load model:", error);
-    }
-  }
-
-  loadModel();
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Playground</title>
 </head>
 <body>
+    <h1>AI Playground</h1>
+    <script>
+        // Load the summarization model
+        const model = "Xenova/bart-large-cnn"; // Updated model for summarization
 
-  <header class="site-header">
-    <h1>AI Experiment Site</h1>
-    <p>Interact with AI directly from your browser.</p>
-  </header>
-
-  <main class="site-main">
-    <textarea id="inputText" placeholder="Paste text here..."></textarea>
-    <button onclick="runAI()">Summarize</button>
-
-    <section id="result">
-      <h3>Result</h3>
-      <div id="output"></div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <p>Built with GitHub Pages & AI</p>
-  </footer>
-
-  <script src="script.js"></script>
+        async function summarize(text) {
+            // Your summarization logic here with the updated model
+        }
+    </script>
 </body>
 </html>
