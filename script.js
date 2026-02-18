@@ -1,20 +1,22 @@
-// Improved output formatting and handling for summarization
+async function runAI() {
+    try {
+        // Call your summarization function here, assuming it's defined elsewhere
+        const summary_text = await summarizer();
 
-function displaySummary(summary) {
-    // Create a container for the summary
-    const summaryContainer = document.getElementById('summary');
+        // Display summary in the output div
+        const outputDiv = document.getElementById('output');
 
-    // Clear existing content
-    summaryContainer.innerHTML = '';
+        // Clear previous content
+        outputDiv.innerHTML = '';
 
-    // Create a new paragraph for the summary
-    const summaryParagraph = document.createElement('p');
-    summaryParagraph.innerHTML = summary;
-    summaryParagraph.style.whiteSpace = 'pre-wrap'; // This allows better text wrapping
-
-    // Append the new summary to the container
-    summaryContainer.appendChild(summaryParagraph);
+        // Use preformatted text for better readability
+        const pre = document.createElement('pre');
+        pre.textContent = summary_text;
+        outputDiv.appendChild(pre);
+    } catch (error) {
+        // Handle error gracefully
+        console.error('Error occurred while summarizing:', error);
+        const outputDiv = document.getElementById('output');
+        outputDiv.innerHTML = '<p>An error occurred while generating the summary. Please try again later.</p>';
+    }
 }
-
-// Usage example:
-// displaySummary('This is an example summary that demonstrates improved formatting and handling.');
