@@ -1,31 +1,46 @@
+const HF_TOKEN = "abcd";
+
 async function runAI() {
-  const input = document.getElementById("inputText").value;
-  const outputDiv = document.getElementById("output");
+  const text = document.getElementById("inputText").value;
+  const output = document.getElementById("output");
 
-  if (!input.trim()) {
-    outputDiv.innerText = "Please enter some text first.";
+  if (!text.trim()) {
+    output.innerText = "Please enter some text first.";
     return;
   }
 
-  if (!window.summarizer) {
-    outputDiv.innerText = "Model is still loading... please wait a moment.";
-    return;
-  }
-
-  outputDiv.innerText = "Summarizing...";
+  output.innerText = "Summarizing...";
 
   try {
-    const result = await window.summarizer(input, {
-      max_length: 150,
-      min_length: 30,
-    });
-    
-    // Format the output with proper line breaks and styling
-    const summaryText = result[0].summary_text;
-    outputDiv.innerHTML = `<p style=\"word-wrap: break-word; white-space: normal; line-height: 1.6;\">${summaryText}</p>`;
-    console.log("Full summary:", summaryText);
+    const response = await fetch(
+      "https://api-inference.huggingface.co/models/facebook/bart-large-cnn",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${HF_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          inputs: text,
+          parameters: {
+            max_length: 150,
+            min_length: 40,
+            do_sample: false,
+          },
+        }),
+      }
+    );
+
+    const result = await response.json();
+
+    if (result[0]?.summary_text) {
+      output.innerText = result[0].summary_text;
+    } else if (result.error) {
+      output.innerText = "Error: " + result.error;
+    } else {
+      output.innerText = "Something went wrong. Try again.";
+    }
   } catch (err) {
-    outputDiv.innerText = "Error running AI model.";
-    console.error("Error details:", err);
+    output.innerText = "Request failed: " + err.message;
   }
 }
