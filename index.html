@@ -4,41 +4,23 @@
   <meta charset="UTF-8">
   <title>AI Experiment Site</title>
   <link rel="stylesheet" href="style.css">
-  <script type="module">
-  import { pipeline } from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.5.0/dist/transformers.min.js";
-
-  // Create a global summarizer variable
-  window.summarizer = null;
-
-  async function loadModel() {
-    window.summarizer = await pipeline("summarization", "Xenova/t5-small");
-    console.log("Summarizer loaded");
-  }
-
-  loadModel();
-</script>
 </head>
 <body>
-
   <header class="site-header">
     <h1>AI Experiment Site</h1>
     <p>Interact with AI directly from your browser.</p>
   </header>
-
   <main class="site-main">
     <textarea id="inputText" placeholder="Paste text here..."></textarea>
     <button onclick="runAI()">Summarize</button>
-
     <section id="result">
       <h3>Result</h3>
       <div id="output"></div>
     </section>
   </main>
-
   <footer class="site-footer">
     <p>Built with GitHub Pages & AI</p>
   </footer>
-
   <script src="script.js"></script>
 </body>
 </html>
