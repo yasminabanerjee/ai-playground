@@ -1,5 +1,3 @@
-const HF_TOKEN = "abcd";
-
 async function runAI() {
   const text = document.getElementById("inputText").value;
   const output = document.getElementById("output");
@@ -12,24 +10,11 @@ async function runAI() {
   output.innerText = "Summarizing...";
 
   try {
-    const response = await fetch(
-      "https://api-inference.huggingface.co/models/facebook/bart-large-cnn",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${HF_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          inputs: text,
-          parameters: {
-            max_length: 150,
-            min_length: 40,
-            do_sample: false,
-          },
-        }),
-      }
-    );
+    const response = await fetch("/.netlify/functions/summarize", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
 
     const result = await response.json();
 
