@@ -4,16 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Playground</title>
+    <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers"></script>
 </head>
 <body>
-    <h1>AI Playground</h1>
+    <h1>Text Summarization</h1>
+    <textarea id="inputText" rows="10" cols="50" placeholder="Enter text to summarize..."></textarea><br>
+    <button id="summarizeButton">Summarize</button>
+    <h2>Result</h2>
+    <div id="resultSection"></div>
+
     <script>
         // Load the summarization model
-        const model = "Xenova/bart-large-cnn"; // Updated model for summarization
+        const model = await transformers.load("Xenova/bart-large-cnn");
 
-        async function summarize(text) {
-            // Your summarization logic here with the updated model
-        }
+        document.getElementById('summarizeButton').addEventListener('click', async () => {
+            const inputText = document.getElementById('inputText').value;
+            const summary = await model.summarize(inputText);
+            document.getElementById('resultSection').innerText = summary;
+        });
     </script>
 </body>
 </html>
